@@ -1,0 +1,94 @@
+apply plugin: 'com.android.application'
+//apply plugin: 'com.brotherd.plugin.ApkDistPlugin'
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.brotherd.customplugin"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
+
+/**
+ * 直接在 build.gradle 中写一个 plugin
+ */
+/** *****************************************************************************************/
+/*class ApkDistExtension {
+    Closure nameMap = null;
+    Closure destDir = null;
+}
+
+class ApkDistPlugin implements Plugin<Project> {
+
+    @Override
+    void apply(Project project) {
+        project.extensions.create("apkdistconf", ApkDistExtension)
+        project.task("apkdist") << {
+            println 'hello world!'
+            def closure = project["apkdistconf"].nameMap
+            closure("wow!")
+            def closure1 = project["apkdistconf"].destDir
+            println(closure1())
+        }
+
+    }
+}
+
+apply plugin: ApkDistPlugin
+
+apkdistconf {
+    nameMap {
+        name ->
+            println "hello" + name
+            return name
+    }
+    destDir {
+         "your-distribution-directory"
+    }
+}*/
+/** *****************************************************************************************/
+
+/**
+ * 使用独立的module 插件
+ */
+/********************************************************************************************/
+buildscript {
+    repositories {
+        maven {
+            url uri('../repo')
+        }
+    }
+    dependencies {
+        classpath 'com.brotherd.plugin:plugin:1.0.0'
+    }
+}
+
+apply plugin: 'com.brotherd.plugin'
+
+apkdistconf {
+    nameMap {
+        name ->
+            println "hello" + name
+            return name
+    }
+
+    destDir = "apk-distribution-directory"
+}
+/********************************************************************************************/
