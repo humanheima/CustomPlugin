@@ -4,8 +4,8 @@ apply plugin: 'maven'
 repositories {
     mavenCentral()
 }
-group='com.brotherd.plugin'
-version='1.0.0'
+group = 'com.brotherd.plugin'
+version = '1.0.0'
 
 uploadArchives {
     repositories {

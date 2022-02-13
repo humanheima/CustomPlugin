@@ -83,12 +83,25 @@ buildscript {
 apply plugin: 'com.brotherd.plugin'
 
 apkdistconf {
+
     nameMap {
-        name ->
-            println "hello" + name
-            return name
+        println "hello" + name
+        return name
     }
 
     destDir = "apk-distribution-directory"
 }
+
 /********************************************************************************************/
+
+//class CustomPlugin implements Plugin<Project> {
+//
+//    @Override
+//    void apply(Project project) {
+//        project.task('CustomPluginTask') {
+//            doLast {
+//                logger.error("自定义插件")
+//            }
+//        }
+//    }
+//}

@@ -8,11 +8,14 @@ class ApkDistPlugin implements Plugin<Project> {
     @Override
     void apply(Project project) {
         project.extensions.create("apkdistconf", ApkDistExtension)
-        project.task("apkdist") << {
-            println 'hello world!'
-            def closure = project["apkdistconf"].nameMap
-            closure("wow!")
-            println project["apkdistconf"].destDir
+        project.task("apkdist") {
+            doLast {
+                println 'hello world!'
+                def closure = project["apkdistconf"].nameMap
+                closure("wow!")
+                println project["apkdistconf"].destDir
+            }
         }
     }
+
 }
